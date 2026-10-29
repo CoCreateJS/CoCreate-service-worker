@@ -1,0 +1,43 @@
+{
+  "name": "@cocreate/service-worker",
+  "version": "1.0.0",
+  "description": "Service worker registration and lifecycle support for CoCreate.",
+  "keywords": [
+    "service-worker",
+    "offline",
+    "cache",
+    "browser-api",
+    "low-code",
+    "realtime-framework",
+    "html5-framework"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "start": "webpack --config webpack.config.js",
+    "build": "webpack --mode=production --config webpack.config.js",
+    "dev": "webpack --config webpack.config.js --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CoCreateJS/CoCreate-service-worker.git"
+  },
+  "author": "CoCreate LLC",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/CoCreateJS/CoCreate-service-worker/issues"
+  },
+  "homepage": "https://cocreate.app/docs/service-worker",
+  "main": "./src/index.js",
+  "dependencies": {
+    "@cocreate/observer": "^1.25.0"
+  },
+  "devDependencies": {
+    "@cocreate/webpack": "^1.9.0"
+  },
+  "allowScripts": {
+    "@cocreate/observer@1.25.0": true,
+    "@cocreate/webpack@1.9.0": true
+  }
+}
