@@ -14,6 +14,22 @@
   "publishConfig": {
     "access": "public"
   },
+  "cocreate": {
+    "environment": [
+      "client"
+    ],
+    "interface": {
+      "schemaVersion": 1,
+      "summary": "Service worker registration and lifecycle support for CoCreate.",
+      "source": "src/index.js",
+      "api": {
+        "exports": [
+          "init",
+          "register"
+        ]
+      }
+    }
+  },
   "scripts": {
     "start": "webpack --config webpack.config.js",
     "build": "webpack --mode=production --config webpack.config.js",
