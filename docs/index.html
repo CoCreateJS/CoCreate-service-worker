@@ -1,18 +1,17 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Service Worker | CoCreateJS</title>
-    <meta name="description" content="Service worker registration and lifecycle support for CoCreate.">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>CoCreate Service Worker | CoCreateJS</title>
+	<meta name="description" content="Register an application service worker as a top-level CoCreate capability.">
 </head>
 <body>
-    <main>
-        <h1>Service Worker</h1>
-        <p>Set the service-worker attribute on an element to register the worker URL it contains. If no path is provided, /service-worker.js is used.</p>
-        <h2>Usage</h2>
-        <pre><code>&lt;html service-worker="/service-worker.js"&gt;</code></pre>
-        <p><a href="/docs/service-worker/demo">Open the demo</a></p>
-    </main>
+	<main>
+		<h1>CoCreate Service Worker</h1>
+		<p>Importing the component registers the configured service worker after page load. No DOM selector is required.</p>
+		<p>By default it registers <code>/service-worker.js</code>. Set <code>window.CoCreateConfig.serviceWorker</code> before loading CoCreate to choose another same-origin worker script.</p>
+		<p>See the demo for an explicit worker path and cache setting.</p>
+	</main>
 </body>
 </html>

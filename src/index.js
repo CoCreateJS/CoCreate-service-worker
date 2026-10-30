@@ -1,48 +1,65 @@
-import Observer from "@cocreate/observer";
-
-const selector = "[service-worker]";
 const registrations = new Map();
 
-function getWorkerUrl(element) {
-    const value = element?.getAttribute(selector.slice(1, -1));
-    if (value === "false") return null;
-    return value || window.CoCreateConfig?.serviceWorker || "/service-worker.js";
+function getStorageValue(key) {
+	try {
+		return window.localStorage.getItem(key);
+	} catch {
+		return null;
+	}
 }
 
-async function register(element) {
-    if (!("serviceWorker" in navigator)) return null;
-
-    const workerUrl = getWorkerUrl(element);
-    if (!workerUrl) return null;
-    if (registrations.has(workerUrl)) return registrations.get(workerUrl);
-
-    const promise = navigator.serviceWorker.register(workerUrl).catch((error) => {
-        registrations.delete(workerUrl);
-        throw error;
-    });
-    registrations.set(workerUrl, promise);
-    return promise;
+function setStorageValue(key, value) {
+	try {
+		window.localStorage.setItem(key, value);
+	} catch {
+		// Service worker registration can still proceed without local storage.
+	}
 }
 
-function init(root = document) {
-    const elements = [];
-    if (root?.matches?.(selector)) elements.push(root);
-    if (root?.querySelectorAll) elements.push(...root.querySelectorAll(selector));
-    if (!elements.length && root === document && window.CoCreateConfig?.serviceWorker)
-        return register();
-    return Promise.all(elements.map((element) => register(element).catch((error) => {
-        console.error("Service worker registration failed", error);
-        return null;
-    })));
+function getWorkerUrl(workerPath) {
+	const config = window.CoCreateConfig || {};
+	const path =
+		workerPath ||
+		config.serviceWorker ||
+		getStorageValue("serviceWorker") ||
+		"/service-worker.js";
+	const cache = config.cache || getStorageValue("cache") || "false";
+
+	setStorageValue("serviceWorker", path);
+	setStorageValue("cache", cache);
+
+	const url = new URL(path, window.location.href);
+	url.searchParams.set("cache", cache);
+	return url.href;
 }
 
-Observer.init({
-    name: "serviceWorker",
-    types: ["addedNodes", "attributes"],
-    selector,
-    callback: (mutation) => init(mutation.target)
-});
+async function register(workerPath) {
+	if (!("serviceWorker" in navigator)) return null;
 
-init();
+	const url = getWorkerUrl(workerPath);
+	if (registrations.has(url)) return registrations.get(url);
+
+	const promise = navigator.serviceWorker.register(url).catch((error) => {
+		registrations.delete(url);
+		throw error;
+	});
+	registrations.set(url, promise);
+	return promise;
+}
+
+function init() {
+	if (!("serviceWorker" in navigator)) return Promise.resolve(null);
+	if (document.readyState === "complete") return register();
+
+	return new Promise((resolve, reject) => {
+		window.addEventListener(
+			"load",
+			() => register().then(resolve, reject),
+			{ once: true }
+		);
+	});
+}
+
+init().catch((error) => console.error("Service worker registration failed", error));
 
 export default { init, register };

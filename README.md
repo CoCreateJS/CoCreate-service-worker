@@ -1,6 +1,6 @@
-# CoCreate-service-worker
+# CoCreate Service Worker
 
-Service worker registration and lifecycle support for CoCreate.
+Service worker registration and lifecycle support for CoCreate. Importing the component registers the configured worker after the page loads. It does not require a DOM attribute or action.
 
 ## Install
 
@@ -8,14 +8,19 @@ Service worker registration and lifecycle support for CoCreate.
 yarn add @cocreate/service-worker
 ```
 
-Or load the browser bundle from `https://cdn.cocreate.app/service-worker/latest/CoCreate-service-worker.min.js`.
+## Configure
 
-## Usage
-
-Set the service-worker attribute on an element to register the worker URL it contains. If no path is provided, /service-worker.js is used. The service-worker script is application-specific: start from [`src/service-worker.js`](src/service-worker.js), then serve it from the same origin as your app. The CoCreate loader does not bundle or silently install that script.
+The default worker path is `/service-worker.js`. Override it through `window.CoCreateConfig` before the CoCreate bundle loads:
 
 ```html
-<html service-worker="/service-worker.js">
+<script>
+	window.CoCreateConfig = {
+		serviceWorker: "/service-worker.js",
+		cache: "false"
+	};
+</script>
 ```
 
-See [`demo/index.html`](demo/index.html) and the [documentation](docs/index.html).
+The worker script is application-specific. Start from [`src/service-worker.js`](src/service-worker.js) and serve it from the same origin as the app. The component registers that script; it does not bundle it into the app or install it through a markup selector.
+
+See [`demo/index.html`](demo/index.html) and [the documentation](docs/index.html).
