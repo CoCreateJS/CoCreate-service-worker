@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" service-worker="./service-worker.js">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,11 +8,14 @@
 <body>
     <main>
         <h1>Service Worker demo</h1>
-        <p>Set the service-worker attribute on an element to register the worker URL it contains. If no path is provided, /service-worker.js is used.</p>
+        <p>The component registers the worker after the page loads. This demo configures a local worker path.</p>
 
 
-        <p>This demo expects a service-worker.js file at the path in the service-worker attribute.</p>
+        <p>The worker script must be served from the same origin as this page.</p>
     </main>
+    <script>
+        window.CoCreateConfig = { serviceWorker: "./service-worker.js", cache: "false" };
+    </script>
     <script src="../dist/CoCreate-service-worker.js"></script>
 </body>
 </html>
