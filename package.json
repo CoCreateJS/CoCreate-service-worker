@@ -44,7 +44,7 @@
   "bugs": {
     "url": "https://github.com/CoCreateJS/CoCreate-service-worker/issues"
   },
-  "homepage": "https://cocreate.app/docs/service-worker",
+  "homepage": "https://CoCreateJS.com/docs/service-worker",
   "main": "./src/index.js",
   "devDependencies": {
     "@cocreate/webpack": "^1.9.0"

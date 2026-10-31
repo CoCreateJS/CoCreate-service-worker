@@ -11,7 +11,7 @@ module.exports = {
                 path: "/docs/service-worker",
                 pathname: "/docs/service-worker/index.html",
                 src: "{{./docs/index.html}}",
-                host: ["cocreate.app", "general.cocreate.app"],
+                host: ["CoCreateJS.com", "general.CoCreateJS.com"],
                 directory: "service-worker",
                 "content-type": "{{content-type}}",
                 public: "true"
