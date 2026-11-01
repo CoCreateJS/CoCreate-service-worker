@@ -33,6 +33,11 @@ function getWorkerUrl(workerPath) {
 	return url.href;
 }
 
+/**
+ *
+ * @public
+ * @environment client
+ */
 async function register(workerPath) {
 	if (!("serviceWorker" in navigator)) return null;
 
@@ -47,6 +52,11 @@ async function register(workerPath) {
 	return promise;
 }
 
+/**
+ *
+ * @public
+ * @environment client
+ */
 function init() {
 	if (!("serviceWorker" in navigator)) return Promise.resolve(null);
 	if (document.readyState === "complete") return register();
@@ -63,3 +73,10 @@ function init() {
 init().catch((error) => console.error("Service worker registration failed", error));
 
 export default { init, register };
+
+/**
+ * Service worker registration and lifecycle support for CoCreate.
+ *
+ * @module service-worker
+ * @environment client
+ */
